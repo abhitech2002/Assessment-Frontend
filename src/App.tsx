@@ -5,6 +5,7 @@ import Welcome from './pages/Welcome';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Category from './pages/Category';
+import Friends from './pages/Friends'
 
 function App(): JSX.Element {
   return (
@@ -17,7 +18,7 @@ function App(): JSX.Element {
             <Route path="/user/category" element={<Category />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            {/* <Route path="/user/follow" element={<FollowsPage />} /> Update this line */}
+            <Route path="/user/follow" element={<Friends />} /> 
           </Routes>
         </div>
       </Router>
