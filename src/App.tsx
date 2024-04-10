@@ -6,13 +6,14 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Category from './pages/Category';
 import Friends from './pages/Friends'
+import Header from './components/Header';
 
 function App(): JSX.Element {
   return (
 <>
       <Router>
         <div className="App">
-          {/* <Header /> */}
+          <Header />
           <Routes>
             <Route path="/" element={<Welcome />} />
             <Route path="/user/category" element={<Category />} />
