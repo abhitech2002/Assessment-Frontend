@@ -3,6 +3,7 @@ import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Welcome from './pages/Welcome';
 import Register from './pages/Register';
+import Login from './pages/Login';
 
 function App(): JSX.Element {
   return (
@@ -13,7 +14,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<Welcome />} />
             {/* <Route path="/user/category" element={<Dashboard />} /> */}
-            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             {/* <Route path="/user/follow" element={<FollowsPage />} /> Update this line */}
           </Routes>
