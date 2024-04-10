@@ -34,7 +34,6 @@ const Register: React.FC = () => {
 
     const { firstName, lastName, email, location, userName, password, repassword, termsAndConditions } = formData;
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
     const dispatch = useDispatch<AppDispatch>();
 
 

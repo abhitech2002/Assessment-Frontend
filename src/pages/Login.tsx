@@ -1,9 +1,15 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login, reset } from '../feature/auth/authSlice';
+import Spinner from '../components/Spinner';
 import SignupImage from '../images/Signup.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faAt } from '@fortawesome/free-solid-svg-icons';
+import { AppDispatch } from '../app/store';
+
 
 interface FormData {
     email: string;
@@ -18,6 +24,26 @@ const Login: React.FC = () => {
 
     const { email, password } = formData;
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+
+    const { user, isLoading, isError, isSuccess, message } = useSelector(
+        (state: any) => state.auth
+    );
+
+    useEffect(() => {
+        if (isError) {
+            toast.error('This is an error message');
+        }
+
+        if (isSuccess || user) {
+            toast.success('Login successful');
+            navigate('/user/category');
+        }
+
+        dispatch(reset());
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -27,7 +53,18 @@ const Login: React.FC = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const userData = {
+            email,
+            password,
+        };
+
+        dispatch(login(userData));
     };
+
+    if (isLoading) {
+        return <Spinner />;
+    }
 
     return (
         <>

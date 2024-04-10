@@ -19,9 +19,9 @@ const SIGN_IN = 'http://localhost:3000/signin/';
 const register = async (userData: UserData): Promise<any> => {
     try {
         const response: AxiosResponse<any> = await axios.post(API_URL, userData);
-        return response.data; // Return response data if successful
+        return response.data; 
     } catch (error) {
-        throw error; // Throw error if registration fails
+        throw error; 
     }
 };
 
@@ -29,9 +29,9 @@ const register = async (userData: UserData): Promise<any> => {
 const login = async (loginData: LoginData): Promise<any> => {
     try {
         const response: AxiosResponse<any> = await axios.post(SIGN_IN, loginData);
-        return response.data; // Return response data if successful
+        return response.data; 
     } catch (error) {
-        throw error; // Throw error if login fails
+        throw error; 
     }
 };
 

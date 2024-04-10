@@ -11,6 +11,11 @@ interface UserData {
     password: string;
 }
 
+interface INUserData {
+    email: string;
+    password: string;
+}
+
 // Define the initial state type
 interface AuthState {
     user: UserData | null;
@@ -31,6 +36,7 @@ const initialState: AuthState = {
     message: '',
 };
 
+// Register
 export const register = createAsyncThunk<UserData, UserData, { rejectValue: { message: string, data: any } }>(
     'auth/register',
     async (userData, thunkAPI) => {
@@ -44,6 +50,19 @@ export const register = createAsyncThunk<UserData, UserData, { rejectValue: { me
     }
 );
 
+// Login
+export const login = createAsyncThunk<INUserData, INUserData, { rejectValue: { message: string, data: any } }>(
+    'auth/login',
+    async (userData, thunkAPI) => {
+        try {
+            const response = await authService.login(userData);
+            return response.data;
+        } catch (error: any) {
+            const errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            return thunkAPI.rejectWithValue({ message: 'Login failed', data: errorMessage });
+        }
+    }
+);  
 
 // Define the auth slice
 export const authSlice = createSlice({
@@ -71,6 +90,29 @@ export const authSlice = createSlice({
                 state.isError = true;
                 state.isLoading = false;
                 state.message = action.payload?.message || 'Signup failed';
+            })
+            .addCase(login.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                if (action.payload) {
+                    state.user = {
+                        firstName: '', 
+                        lastName: '', 
+                        email: action.payload.email,
+                        location: '', 
+                        userName: '', 
+                        password: action.payload.password,
+                    };
+                }
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload?.message || 'Login failed';
+                state.user = null;
             })
     },
 });
