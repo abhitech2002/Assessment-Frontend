@@ -1,8 +1,13 @@
-import React, { useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom'; // Import useLocation
+import { toast } from 'react-toastify';
+import { register, reset } from '../feature/auth/authSlice';
+import Spinner from '../components/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faAt } from '@fortawesome/free-solid-svg-icons';
 import SignupImage from '../images/Signup.png';
+import { AppDispatch } from '../app/store';
 
 interface FormData {
     firstName: string;
@@ -15,7 +20,7 @@ interface FormData {
     termsAndConditions: boolean;
 }
 
-const Register: React.FC<{}> = () => {
+const Register: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         firstName: '',
         lastName: '',
@@ -28,6 +33,23 @@ const Register: React.FC<{}> = () => {
     });
 
     const { firstName, lastName, email, location, userName, password, repassword, termsAndConditions } = formData;
+    const navigate = useNavigate();
+    // const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
+
+
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state: any) => state.auth);
+
+    useEffect(() => {
+        if (isError) {
+            toast.error('This is an error message');
+        }
+        if (isSuccess || user) {
+            toast.success('Signup successful');
+            navigate('/login');
+        }
+        dispatch(reset());
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,12 +57,23 @@ const Register: React.FC<{}> = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (password !== repassword) {
+            toast.error("Passwords do not match");
+        } else {
+            const userData = { firstName, lastName, email, location, userName, password, repassword };
+            dispatch(register(userData));
+        }
+    };
+
+    if (isLoading) {
+        return <Spinner />;
     }
 
     return (
         <>
             <section className="flex flex-col md:flex-row items-center justify-center min-h-screen">
-                <div className="grid grid-cols-2 gap-4">    
+                <div className="grid grid-cols-2 gap-4">
                     <div className="col-span-1 flex flex-col justify-center w-full items-center">
                         <h1 className="text-3xl font-semibold h-9 text-[#4B0082] mb-2 mr-80">
                             Sign Up
@@ -192,4 +225,4 @@ const Register: React.FC<{}> = () => {
     )
 }
 
-export default Register
+export default Register;
