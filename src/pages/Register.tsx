@@ -90,17 +90,17 @@ const Register: React.FC = () => {
   return (
     <>
       <section className="flex flex-col md:flex-row items-center justify-center min-h-screen">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-1 flex flex-col justify-center w-full items-center">
-            <h1 className="text-3xl font-semibold h-9 text-[#4B0082] mb-2 mr-80">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col justify-center w-full items-center md:mr-10">
+            <h1 className="text-3xl font-semibold text-[#4B0082] mb-2">
               Sign Up
             </h1>
-            <p className="text-[#9D9D9D] font-medium mb-8 mr-80 ml-10">
+            <p className="text-[#9D9D9D] font-medium mb-8">
               Connect & Collect...!
             </p>
             <form
               onSubmit={onSubmit}
-              className="shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md items-center"
+              className="shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
             >
               <div className="grid grid-cols-1 gap-4 mb-4">
                 <div className="flex flex-col md:flex-row gap-4">
@@ -225,7 +225,7 @@ const Register: React.FC = () => {
                 />
                 <label htmlFor="termsAndConditions" className="text-gray-600">
                   Accept Terms & Conditions.{" "}
-                  <Link to="#" className="text-violet-600">
+                  <Link to="/terms-condition" className="text-[#4B0082]">
                     Click Here
                   </Link>
                 </label>
@@ -233,7 +233,11 @@ const Register: React.FC = () => {
               <div className="flex items-center justify-center">
                 <button
                   type="submit"
-                  className="bg-[#4B0082] hover:bg-[#4c0082d5] text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className={`${
+                    termsAndConditions
+                      ? "bg-[#4B0082] hover:bg-[#4c0082d5]"
+                      : "bg-violet-500 hover:bg-violet-700"
+                  } text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                   disabled={!termsAndConditions}
                 >
                   Sign Up
@@ -253,10 +257,8 @@ const Register: React.FC = () => {
               <p>Denaurlen Copyright @ 2021, All Rights Reserved</p>
             </footer>
           </div>
-          <div className="col-span-1 flex flex-col bg-gray-200 -m-0">
-            {" "}
-            {/* Right side container */}
-            <div className="p-4 rounded-t-lg ml-5">
+          <div className="hidden md:flex flex-col bg-gray-200">
+            <div className="p-4 rounded-t-lg">
               <h1 className="text-3xl font-semibold text-[#4B0082] h-11">
                 Denaurlen
               </h1>

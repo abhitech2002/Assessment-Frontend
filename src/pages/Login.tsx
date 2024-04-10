@@ -68,13 +68,13 @@ const Login: React.FC = () => {
   return (
     <>
       <section className="max-w-screen-2xl mx-auto pt-4 pb-0 px-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
           {/* Left Side */}
-          <div className="col-span-1 flex flex-col justify-center w-1/2 ml-28">
-            <h1 className="text-3xl text-[#4B0082] mb-2 font-semibold h-9">
+          <div className="col-span-1 flex flex-col justify-center xl:w-1/2 2xl:w-1/2 lg:w-1/2 2xl:ml-28 xl:ml-28 lg:ml-28 md:ml-24 md:w-1/2">
+            <h1 className="text-3xl text-[#4B0082] mb-2 font-semibold">
               Sign In
             </h1>
-            <p className="text-[#9D9D9D] mb-10 font-medium h-6">
+            <p className="text-[#9D9D9D] mb-10 font-medium">
               Connect & Collect...!
             </p>
             <div className="flex flex-col items-center">
@@ -115,9 +115,11 @@ const Login: React.FC = () => {
                     </label>
                   </div>
                   <div className="text-[#4B0082]">
+                    <button>
                     <a href="/" className="hover:underline font-normal">
                       Forget Password?
                     </a>
+                    </button>
                   </div>
                 </div>
                 <div className="text-center">
@@ -158,10 +160,8 @@ const Login: React.FC = () => {
             </footer>
           </div>
           {/* Right Side */}
-          <div className="col-span-1 flex flex-col bg-gray-200 -m-0">
-            {" "}
-            {/* Right side container */}
-            <div className="p-4 rounded-t-lg ml-5">
+          <div className="col-span-1 flex flex-col bg-gray-200">
+            <div className="p-4 rounded-t-lg">
               <h1 className="text-3xl font-semibold text-[#4B0082] h-11">
                 Denaurlen
               </h1>
