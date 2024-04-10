@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CategoriesData from './CategoriesData';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Spinner from '../components/Spinner';
 import { RootState } from '../app/store';
+import { toast } from 'react-toastify';
+
 
 const Category: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -11,10 +12,12 @@ const Category: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
 
-  if (!user) {
-    navigate('/login');
-    return <Spinner />;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      toast.error('Please login to access the Category page');
+    }
+  }, [user, navigate]);
 
   const toggleCategory = (categoryId: string) => {
     if (selectedCategories.includes(categoryId)) {

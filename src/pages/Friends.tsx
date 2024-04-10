@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FriendsData from './FriendsData';
 import Suggestion from '../images/Suggestion1.png';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Spinner from '../components/Spinner';
+import { toast } from 'react-toastify';
 
 interface Friend {
   id: number;
@@ -18,11 +18,12 @@ const FollowsPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: any) => state.auth);
 
-  // Check if user is not authenticated, redirect to login page
-  if (!user) {
-    navigate('/login');
-    return <Spinner />; // You can render a loading spinner or message here
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      toast.error('Please login to access the follow page');
+    }
+  }, [user, navigate]);
 
   const handleFollowToggle = (id: number) => {
     setFriends(prevData =>
