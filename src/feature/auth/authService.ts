@@ -12,8 +12,8 @@ interface LoginData {
   password: string;
 }
 
-const API_URL = "http://localhost:3000/signup/";
-const SIGN_IN = "http://localhost:3000/signin/";
+const API_URL = "http://localhost:3000/v1/api/signup/";
+const SIGN_IN = "http://localhost:3000/v1/api/signin/";
 
 // Register User
 const register = async (userData: UserData): Promise<any> => {

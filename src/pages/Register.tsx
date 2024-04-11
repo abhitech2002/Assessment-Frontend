@@ -144,9 +144,14 @@ const Register: React.FC = () => {
                     name="email"
                     value={email}
                     placeholder="Email"
-                    onChange={onChange}
+                    onChange={onChange} 
                     className="pl-12 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-[#4B0082] focus:shadow-outline focus:bg-white bg-gray-100"
                   />
+                  <button
+                    className="absolute inset-y-0 right-0 flex items-center justify-center pr-2 h-7 w-8 mt-1 mr-2 rounded-r text-[15px] text-[#4B0082] font-semibold" disabled
+                    >
+                    Verify
+                  </button>
                 </div>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-400 bg-[#4B0082] h-7 w-8 ml-1 mt-1 rounded">

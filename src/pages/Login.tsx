@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
@@ -21,8 +21,6 @@ const Login: React.FC = () => {
     password: "",
   });
 
-  const [showForgetPasswordModal, setShowForgetPasswordModal] = useState(false);
-
   const { email, password } = formData;
 
   const navigate = useNavigate();
@@ -32,9 +30,18 @@ const Login: React.FC = () => {
     (state: any) => state.auth
   );
 
-  const toggleForgetPasswordModal = () => {
-    setShowForgetPasswordModal(!showForgetPasswordModal);
-  };
+  useEffect(() => {
+    if (isError) {
+      toast.error("This is an error message");
+    }
+
+    if (isSuccess || user) {
+      toast.success("Login successful");
+      navigate("/user/category");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => ({
@@ -108,10 +115,10 @@ const Login: React.FC = () => {
                     </label>
                   </div>
                   <div className="text-[#4B0082]">
-                    <button onClick={toggleForgetPasswordModal}>
-                      <p className="hover:underline font-normal">
-                        Forget Password?
-                      </p>
+                    <button disabled>
+                    <p className="hover:underline font-normal" >
+                      Forget Password?
+                    </p>
                     </button>
                   </div>
                 </div>
@@ -132,7 +139,7 @@ const Login: React.FC = () => {
             </div>
             <div className="text-center mt-4">
               <button
-                type="button"
+                type="button" disabled
                 className="bg-white text-[#9D9D9D] flex items-center justify-center w-full px-4 py-2 rounded border-2 font-normal hover:border-gray-500"
               >
                 <FaGoogle className="mr-2" />
@@ -170,42 +177,6 @@ const Login: React.FC = () => {
           </div>
         </div>
       </section>
-      {/* Forget Password Modal */}
-      {showForgetPasswordModal && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg w-96">
-            <h2 className="text-2xl font-semibold mb-2 text-[#4B0082]">
-              Forget Password?
-            </h2>
-            <p className="text-[#9D9D9D] mb-4">No worries we covered you..!</p>
-            <div className="mb-4 relative">
-              <div className="absolute inset-y-1 left-0 flex items-center pl-2 text-gray-400 bg-[#4B0082] h-8 w-8 ml-2 mt-1">
-                <FontAwesomeIcon icon={faAt} className="text-white" />
-              </div>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                placeholder="Email"
-                onChange={onChange}
-                className="w-full focus:outline-[#4B0082] pl-12 py-3 px-3 bg-gray-100 leading-tight text-gray-700 focus:bg-white"
-              />
-            </div>
-            <div className="flex justify-between">
-              <button
-                className="bg-[#F5F5F5] text-[#9D9D9D] px-4 py-2 rounded hover:bg-[#4c0082d0] font-semibold"
-                onClick={toggleForgetPasswordModal}
-              >
-                Close
-              </button>
-              <button className="bg-[#4B0082] text-white px-4 py-2 rounded hover:bg-[#4c0082d0] font-semibold">
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };
