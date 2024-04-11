@@ -10,10 +10,10 @@ interface UserData {
 interface LoginData {
   email: string;
   password: string;
-}
+}  
 
-const API_URL = "http://localhost:3000/v1/api/signup/";
-const SIGN_IN = "http://localhost:3000/v1/api/signin/";
+const API_URL = "http://localhost:8895/v1/api/signup";
+const SIGN_IN = "http://localhost:8895/v1/api/signin";
 
 // Register User
 const register = async (userData: UserData): Promise<any> => {
