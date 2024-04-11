@@ -39,7 +39,7 @@ const Category: React.FC = () => {
   return (
     <div className="bg-gray-50 p-4 flex flex-col items-center">
       <h2 className="text-xl font-medium mb-4 bg-[#EDD3FF] h-10 w-full flex items-center justify-center px-4">Choose your top 10 categories</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
         {CategoriesData.map(category => (
           <div
             key={category.id}
