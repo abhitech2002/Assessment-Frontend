@@ -45,6 +45,8 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
+  const [isEmailValid, setIsEmailValid] = useState(false);
+
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state: any) => state.auth
   );
@@ -61,7 +63,13 @@ const Register: React.FC = () => {
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Validate email address
+    if (name === "email") {
+      setIsEmailValid(validateEmail(value));
+    }
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,6 +89,11 @@ const Register: React.FC = () => {
       };
       dispatch(register(userData));
     }
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   if (isLoading) {
@@ -144,12 +157,15 @@ const Register: React.FC = () => {
                     name="email"
                     value={email}
                     placeholder="Email"
-                    onChange={onChange} 
+                    onChange={onChange}
                     className="pl-12 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-[#4B0082] focus:shadow-outline focus:bg-white bg-gray-100"
                   />
                   <button
-                    className="absolute inset-y-0 right-0 flex items-center justify-center pr-2 h-7 w-8 mt-1 mr-2 rounded-r text-[15px] text-[#4B0082] font-semibold" disabled
-                    >
+                    className={`absolute inset-y-0 right-0 flex items-center justify-center pr-2 h-7 w-8 mt-1 mr-2 rounded-r text-[15px] text-[#4B0082] font-semibold ${
+                      !isEmailValid ? "opacity-50 pointer-events-none" : ""
+                    }`}
+                    disabled={!isEmailValid}
+                  >
                     Verify
                   </button>
                 </div>
