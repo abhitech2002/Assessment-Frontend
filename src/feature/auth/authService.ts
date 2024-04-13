@@ -12,7 +12,7 @@ interface LoginData {
   password: string;
 }  
 
-const API_URL = "https://assessment-backend-qe3r.onrender.com/v1/api/signup";
+const API_URL = "http://localhost:8895/v1/api/signup";
 const SIGN_IN = "https://assessment-backend-qe3r.onrender.com/v1/api/signin";
 
 // Register User
